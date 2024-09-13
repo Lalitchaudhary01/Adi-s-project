@@ -18,6 +18,23 @@ const Dashboard = () => {
     setAttendance((prev) => ({ ...prev, [id]: status }));
   };
 
+  const handleSubmit = () => {
+    const presentStudents = students.filter(
+      (student) => attendance[student.id] === "Present"
+    );
+    const absentStudents = students.filter(
+      (student) => attendance[student.id] === "Absent"
+    );
+    const presentNames = presentStudents
+      .map((student) => student.name)
+      .join(", ");
+    const absentNames = absentStudents
+      .map((student) => student.name)
+      .join(", ");
+
+    alert(`Present: ${presentNames}\nAbsent: ${absentNames}`);
+  };
+
   const currentDate = new Date().toLocaleDateString();
 
   return (
@@ -32,7 +49,7 @@ const Dashboard = () => {
             <p className="text-lg font-semibold">{currentDate}</p>
           </div>
         </div>
-        <table className="min-w-full bg-white border rounded-lg">
+        <table className="min-w-full bg-white border rounded-lg mb-6">
           <thead>
             <tr>
               <th className="py-2 text-left">Student</th>
@@ -69,6 +86,14 @@ const Dashboard = () => {
             ))}
           </tbody>
         </table>
+        <div className="flex justify-center">
+          <button
+            onClick={handleSubmit}
+            className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600"
+          >
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   );
