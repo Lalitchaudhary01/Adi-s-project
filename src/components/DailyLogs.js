@@ -1,33 +1,30 @@
-// src/components/DailyLogs.js
 import React from "react";
 
-const DailyLogs = ({ logs }) => {
+const DailyLogs = () => {
+  const logs = [
+    { date: "2024-09-12", status: "Present" },
+    { date: "2024-09-11", status: "Absent" },
+    // More dummy logs
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full">
-        <h2 className="text-2xl font-semibold text-center text-blue-600 mb-6">
-          Daily Logs
+    <div className="min-h-screen p-8 bg-gray-100">
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-4xl mx-auto">
+        <h2 className="text-2xl font-bold mb-4 text-center">
+          Daily Attendance Logs
         </h2>
-        <table className="w-full table-auto">
+        <table className="min-w-full bg-white">
           <thead>
-            <tr className="text-left text-gray-600 font-semibold">
-              <th className="p-2">Email</th>
-              <th className="p-2">Status</th>
-              <th className="p-2">Date</th>
+            <tr>
+              <th className="py-2 text-left">Date</th>
+              <th className="py-2 text-left">Status</th>
             </tr>
           </thead>
           <tbody>
             {logs.map((log, index) => (
               <tr key={index} className="border-t">
-                <td className="p-2">{log.email}</td>
-                <td
-                  className={`p-2 ${
-                    log.status === "Present" ? "text-green-500" : "text-red-500"
-                  }`}
-                >
-                  {log.status}
-                </td>
-                <td className="p-2">{log.date}</td>
+                <td className="py-2">{log.date}</td>
+                <td className="py-2">{log.status}</td>
               </tr>
             ))}
           </tbody>

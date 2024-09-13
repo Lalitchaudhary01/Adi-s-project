@@ -1,48 +1,27 @@
-// src/components/MarkAttendance.js
 import React, { useState } from "react";
 
-const MarkAttendance = ({ user }) => {
-  const [attendanceStatus, setAttendanceStatus] = useState(null);
+const MarkAttendance = () => {
+  const [attendance, setAttendance] = useState(false);
 
-  const markAttendance = (status) => {
-    setAttendanceStatus(status);
-    alert(`You have marked yourself as ${status}`);
+  const handleAttendance = () => {
+    setAttendance(!attendance);
+    alert(attendance ? "Attendance Marked!" : "Attendance Removed!");
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-96">
-        <h2 className="text-2xl font-semibold text-center text-blue-600 mb-6">
-          Mark Attendance
-        </h2>
-        <p className="text-lg text-gray-700 mb-4">Welcome, {user.email}</p>
-        <div className="flex justify-between mb-6">
+    <div className="min-h-screen flex justify-center items-center bg-gray-100">
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+        <h2 className="text-2xl font-bold mb-4 text-center">Mark Attendance</h2>
+        <div className="flex justify-center">
           <button
-            onClick={() => markAttendance("Present")}
-            className="w-1/2 mr-2 py-3 bg-green-500 text-white rounded-lg font-semibold shadow-md hover:bg-green-600 transition"
+            onClick={handleAttendance}
+            className={`p-4 rounded-lg ${
+              attendance ? "bg-green-500" : "bg-red-500"
+            } text-white`}
           >
-            Present
-          </button>
-          <button
-            onClick={() => markAttendance("Absent")}
-            className="w-1/2 ml-2 py-3 bg-red-500 text-white rounded-lg font-semibold shadow-md hover:bg-red-600 transition"
-          >
-            Absent
+            {attendance ? "Attendance Marked" : "Mark Attendance"}
           </button>
         </div>
-        {attendanceStatus && (
-          <div className="text-center">
-            <p
-              className={`text-lg font-semibold ${
-                attendanceStatus === "Present"
-                  ? "text-green-500"
-                  : "text-red-500"
-              }`}
-            >
-              Status: {attendanceStatus}
-            </p>
-          </div>
-        )}
       </div>
     </div>
   );
