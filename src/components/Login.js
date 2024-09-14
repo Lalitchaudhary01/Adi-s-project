@@ -1,53 +1,46 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Login = () => {
+  const { role } = useParams(); // 'teacher', 'student', or 'parent'
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Dummy validation for username and password
-    if (username && password) {
-      navigate("/dashboard", { state: { teacher: username, subject: "Math" } });
-    } else {
-      alert("Please enter both username and password.");
+  const handleLogin = () => {
+    if (role === "teacher") {
+      navigate("/dashboard/teacher", { state: { teacher: username } });
+    } else if (role === "student") {
+      navigate("/dashboard/student", { state: { student: username } });
+    } else if (role === "parent") {
+      navigate("/dashboard/parent", { state: { parent: username } });
     }
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700">Username</label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full p-2 border rounded-lg"
-              placeholder="Enter your username"
-            />
-          </div>
-          <div className="mb-6">
-            <label className="block text-gray-700">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 border rounded-lg"
-              placeholder="Enter your password"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600"
-          >
-            Login
-          </button>
-        </form>
+    <div className="min-h-screen bg-blue-100 flex items-center justify-center">
+      <div className="bg-white p-8 rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold mb-6 capitalize">{role} Login</h2>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="block w-full mb-4 p-2 border rounded-lg"
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="block w-full mb-4 p-2 border rounded-lg"
+        />
+        <button
+          onClick={handleLogin}
+          className="bg-blue-500 text-white w-full py-2 rounded-lg hover:bg-blue-600"
+        >
+          Login
+        </button>
       </div>
     </div>
   );
